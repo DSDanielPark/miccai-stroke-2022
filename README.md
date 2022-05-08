@@ -1,0 +1,2 @@
+# miccai_stroke_2022
+ISCHEMIC STROKE LESION SEGMENTATION 2022 Challenge 
