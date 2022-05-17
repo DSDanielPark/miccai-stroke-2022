@@ -4,15 +4,23 @@ __pycache__
 01.data/*
 *.tflite
 
+*.json
+*.zip
+*.tar.gz
+*.csv
+*.xlsx
+*.pdf
+*.nii
+
 ## iOS files
 Pods
-
+*.png
 # Android files
 # Built application files
 *.apk
 *.ap_
 *.aab
-
+*.nii.gz
 # Files for the ART/Dalvik VM
 *.dex
 
