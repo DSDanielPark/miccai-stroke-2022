@@ -30,6 +30,16 @@ class NiftiAnalysis:
         self.config = config
 
     def save_nifti_images(self, input_nifti_path, axis, layer_numb_list, interval, save_path):
+        '''
+        axis: 0,1,2 축 결정
+        layer_numb_list: 9장의 시각화할 단면 번호, None으로 입력시 전체 이미지의 중간 단면 수를 
+                         기준으로 interval=5만큼 이동하면서 총 9개의 단면을 결정함
+        interval: default는 5
+        save_path: 저장할 경로 입력
+
+        ex) save_nifti_images('input_path', 0, None, 5, 'output_path')
+        '''
+
         file_name = input_nifti_path.split('\\')[-1].rstrip('.nii.gz')
         img = nib.load(input_nifti_path)
         data = img.get_fdata()
