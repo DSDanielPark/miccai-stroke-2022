@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 
 class Config:
     parser = argparse.ArgumentParser(description='configuration for nifti analysis')
-    parser.add_argument('--task1_data_path', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/01.data/task1.stroke_segmentation/dataset-ISLES22^release1 unzipped version')
-    parser.add_argument('--task2_data_path', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/01.data/task2.ATLAS_2.0/ATLAS_2')
+    parser.add_argument('--task1_data_path', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/data/task1.stroke_segmentation/dataset-ISLES22^release1 unzipped version')
+    parser.add_argument('--task2_data_path', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/data/task2.ATLAS_2.0/ATLAS_2')
     parser.add_argument('--save_path', default='./')
     parse = parser.parse_args()
     params = {
@@ -22,15 +22,15 @@ class Config:
 
 
 class NiftiAnalysis:
-    def __init__(self, config):
-        self.config = config
+    def __init__(self, Config):
+        self.config = Config
 
     def save_nifti_images(self, input_nifti_path, axis, layer_numb_list, interval, save_path):
         '''
         axis: 0,1,2 축 결정
         layer_numb_list: 9장의 시각화할 단면 번호, None으로 입력시 전체 이미지의 중간 단면 수를 
                          기준으로 interval=5만큼 이동하면서 총 9개의 단면을 결정함
-        interval: default는 5
+        interval: 중간 단면 수로부터 선택할 슬라이드 간격
         save_path: 저장할 경로 입력
 
         ex) save_nifti_images('input_path', 0, None, 5, 'output_path')
@@ -68,22 +68,29 @@ class NiftiAnalysis:
 
 
     def reculsive_glob_list(self, data_path):
-        whole_file_list = glob.glob(repr(data_path), recursive=True)
+        whole_file_list = glob.glob(r"{}".format(data_path), recursive=True)
         
         return whole_file_list
         
         
 if __name__ == "__main__":
-    config = Config.params
-    task1_derivateive_file_path = str(config['DATA1_PATH']) + '/derivatives/**/*.nii.gz'
-    task1_rawdata_file_path = str(config['DATA1_PATH']) + + '/rawdata/**/*.nii.gz'
-    task2_test_path = str(config['DATA2_PATH']) + '/Testing/**/**/**/**/*.nii.gz'
-    task2_train_path = str(config['DATA2_PATH']) + '/Training/**/**/**/**/*.nii.gz'
+    config = Config().params
 
-    eda = NiftiAnalysis()
+    task1_derivateive_file_path = config['DATA1_PATH'] + '/derivatives/**/*.nii.gz'
+    task1_rawdata_file_path = config['DATA1_PATH'] +  '/rawdata/**/*.nii.gz'
+    task2_test_path = config['DATA2_PATH'] + '/Testing/**/**/**/**/*.nii.gz'
+    task2_train_path = config['DATA2_PATH'] + '/Training/**/**/**/**/*.nii.gz'
+
+
+
+    eda = NiftiAnalysis(config)
     task1_de = eda.reculsive_glob_list(task1_derivateive_file_path)
     task1_raw = eda.reculsive_glob_list(task1_rawdata_file_path)
     
     task2_test = eda.reculsive_glob_list(task2_test_path)
     task2_train = eda.reculsive_glob_list(task2_train_path)
-    eda.save_nifti_images(task1_de[0], 0, None, 5, './')
+
+    [eda.save_nifti_images(task1_de[i], 0, None, 4, '../result/task1_mask/') for i in range(len(task1_de))]
+    [eda.save_nifti_images(task1_raw[i], 0, None, 4, '../result/task1_raw/') for i in range(len(task1_raw))]
+    [eda.save_nifti_images(task2_test[i], 0, None, 4, '../result/task2_test/') for i in range(len(task2_test))]
+    [eda.save_nifti_images(task2_train[i], 0, None, 4, '../result/task2_train/') for i in range(len(task2_train))]
