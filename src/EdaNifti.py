@@ -1,14 +1,12 @@
 import argparse
-import json
 import pandas as pd
 import glob
-import re
 import argparse
 import glob
-import os, sys
+import os
 import nibabel as nib 
 import pandas as pd
-import numpy as np
+import numpy as nps
 import matplotlib.pyplot as plt
 
 
@@ -42,13 +40,10 @@ class NiftiAnalysis:
             for ax, layer_numb in zip(axs.ravel(), layer_numb_list):
                 if axis==2:
                     sample = data[:,:,layer_numb]
-
                 elif axis==1:
                     sample = data[:,layer_numb,:]
-	            
                 elif axis==0:
                     sample = data[layer_numb,:,:]
-                
                 ax.imshow(sample, cmap='gray')
 	            
         else:
@@ -80,6 +75,7 @@ if __name__ == "__main__":
 	task2_train_path = str(config['DATA2_PATH']) + '/Training/**/**/**/**/*.nii.gz'
 
 	eda = NiftiAnalysis()
+
 	task1_de = eda.reculsive_glob_list(task1_derivateive_file_path)
 	task1_raw = eda.reculsive_glob_list(task1_rawdata_file_path)
 
