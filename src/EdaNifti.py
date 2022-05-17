@@ -36,6 +36,9 @@ class NiftiAnalysis:
         ex) save_nifti_images('input_path', 0, None, 5, 'output_path')
         '''
 
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+
         file_name = input_nifti_path.split('\\')[-1].rstrip('.nii.gz')
         img = nib.load(input_nifti_path)
         data = img.get_fdata()
@@ -64,7 +67,7 @@ class NiftiAnalysis:
 	    
         plt.savefig(os.path.join(save_path,file_name)+'.png', dpi=300)
         plt.close(fig)
-        
+
         return None
 
 
@@ -91,7 +94,12 @@ if __name__ == "__main__":
     task2_test = eda.reculsive_glob_list(task2_test_path)
     task2_train = eda.reculsive_glob_list(task2_train_path)
 
-    [eda.save_nifti_images(task1_de[i], 0, None, 4, '../result/task1_mask/') for i in range(len(task1_de))]
-    [eda.save_nifti_images(task1_raw[i], 0, None, 4, '../result/task1_raw/') for i in range(len(task1_raw))]
-    [eda.save_nifti_images(task2_test[i], 0, None, 4, '../result/task2_test/') for i in range(len(task2_test))]
-    [eda.save_nifti_images(task2_train[i], 0, None, 4, '../result/task2_train/') for i in range(len(task2_train))]
+
+    interval = 4
+
+    for i in range(len(3)):
+        [eda.save_nifti_images(task1_de[i], i, None, interval, '../result/task1_mask/') for i in range(len(task1_de))]
+        [eda.save_nifti_images(task1_raw[i], i, None, interval, '../result/task1_raw/') for i in range(len(task1_raw))]
+        [eda.save_nifti_images(task2_test[i], i, None, interval, '../result/task2_test/') for i in range(len(task2_test))]
+        [eda.save_nifti_images(task2_train[i], i, None, interval, '../result/task2_train/') for i in range(len(task2_train))]
+
