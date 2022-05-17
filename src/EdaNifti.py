@@ -63,7 +63,8 @@ class NiftiAnalysis:
                 ax.imshow(sample, cmap='gray')
 	    
         plt.savefig(os.path.join(save_path,file_name)+'.png', dpi=300)
-
+        plt.close(fig)
+        
         return None
 
 
