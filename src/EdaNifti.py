@@ -98,8 +98,8 @@ if __name__ == "__main__":
     interval = 4
 
     for k in range(len(3)):
-        [eda.save_nifti_images(task1_de[i], k, None, interval, '../result/task1_mask/') for i in range(len(task1_de))]
-        [eda.save_nifti_images(task1_raw[i], k, None, interval, '../result/task1_raw/') for i in range(len(task1_raw))]
-        [eda.save_nifti_images(task2_test[i], k, None, interval, '../result/task2_test/') for i in range(len(task2_test))]
-        [eda.save_nifti_images(task2_train[i], k, None, interval, '../result/task2_train/') for i in range(len(task2_train))]
+        [eda.save_nifti_images(task1_de[i], k, None, interval, '../result/task1_mask'+str(k)+'/') for i in range(len(task1_de))]
+        [eda.save_nifti_images(task1_raw[i], k, None, interval, '../result/task1_raw'+str(k)+'/') for i in range(len(task1_raw))]
+        [eda.save_nifti_images(task2_test[i], k, None, interval, '../result/task2_test'+str(k)+'/') for i in range(len(task2_test))]
+        [eda.save_nifti_images(task2_train[i], k, None, interval, '../result/task2_train'+str(k)+'/') for i in range(len(task2_train))]
 
