@@ -74,7 +74,7 @@ class NiftiAnalysis:
 	    
         plt.savefig(os.path.join(save_path,file_name)+'.png', dpi=300)
         print('...saved img of {file_name}')
-        plt.close(fig)
+        plt.close()
 
 
         return None
