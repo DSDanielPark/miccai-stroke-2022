@@ -86,8 +86,9 @@ class NiftiAnalysis:
         	img = nib.load(nifti_path)
 		
 		# 0, 1이 아닌 값들이 segmentation binary nifti file에 존재하는지 확인
-		img_flatten = np.ravel(img)
-		abnormal_mask = img_flatten[(img_flatten != 0) & (img_flatten != 1)] 
+		img_array = img.get_fdata()
+		img_flatten_array = np.ravel(img_array)
+		abnormal_mask = img_flatten_array[(img_flatten_array != 0) & (img_flatten_array != 1)] 
 		 
 
         	file_name = nifti_path.split('\\')[-1].rstrip('.nii.gz')
