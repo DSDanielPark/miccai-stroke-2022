@@ -71,7 +71,7 @@ class NiftiAnalysis:
         return None
 
 
-    def reculsive_glob_list(self, data_path):
+    def recursive_glob_list(self, data_path):
         whole_file_list = glob.glob(r"{}".format(data_path), recursive=True)
         
         return whole_file_list
@@ -120,11 +120,11 @@ if __name__ == "__main__":
     task2_train_path = config['DATA2_PATH'] + '/Training/**/**/**/**/*.nii.gz'
 
     eda = NiftiAnalysis(config)
-    task1_de = eda.reculsive_glob_list(task1_derivateive_file_path)
-    task1_raw = eda.reculsive_glob_list(task1_rawdata_file_path)
+    task1_de = eda.recursive_glob_list(task1_derivateive_file_path)
+    task1_raw = eda.recursive_glob_list(task1_rawdata_file_path)
     
-    task2_test = eda.reculsive_glob_list(task2_test_path)
-    task2_train = eda.reculsive_glob_list(task2_train_path)
+    task2_test = eda.recursive_glob_list(task2_test_path)
+    task2_train = eda.recursive_glob_list(task2_train_path)
 
     interval = 4
 
