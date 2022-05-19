@@ -84,6 +84,11 @@ class NiftiAnalysis:
         	#print(nifti_path)
         	temp_dict = dict()
         	img = nib.load(nifti_path)
+		
+		# 0, 1이 아닌 값들이 segmentation binary nifti file에 존재하는지 확인
+		img_flatten = np.ravel(img)
+		abnormal_mask = img_flatten[(img_flatten != 0) & (img_flatten != 1)] 
+		 
 
         	file_name = nifti_path.split('\\')[-1].rstrip('.nii.gz')
 
@@ -102,6 +107,9 @@ class NiftiAnalysis:
         	temp_dict['3d_array_std'] = img_array.std()
         	temp_dict['3d_array_min'] = img_array.min()
         	temp_dict['3d_array_max'] = img_array.min()
+		temp_dict['unique_values'] = np.unique(img_flatten, return_counts=True)[0]
+		temp_dict['exception_in_binary_file'] = abnormal_mask.size
+		
 
     		total_dict[i] = temp_dict
         
