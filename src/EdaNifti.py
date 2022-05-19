@@ -46,6 +46,7 @@ class NiftiAnalysis:
             os.makedirs(save_path)
 
         file_name = input_nifti_path.split('\\')[-1].rstrip('.nii.gz')
+        print
         img = nib.load(input_nifti_path)
         data = img.get_fdata()
         fig, axs = plt.subplots(3, 3, figsize=(10,10))
@@ -72,7 +73,9 @@ class NiftiAnalysis:
                 ax.imshow(sample, cmap='gray')
 	    
         plt.savefig(os.path.join(save_path,file_name)+'.png', dpi=300)
+        print('...saved img of {file_name}')
         plt.close(fig)
+
 
         return None
 
@@ -100,7 +103,7 @@ class NiftiAnalysis:
         '''
         total_dict = dict()
         
-        for i, nifti_path in enumerate(globed_nifti_file_paths):
+        for i, nifti_path in enumerate(globbed_nifti_file_paths):
 		    #print(i)
         	#print(nifti_path)
             temp_dict = dict()
@@ -135,10 +138,11 @@ class NiftiAnalysis:
         
         df_summary = pd.DataFrame(total_dict).T
         df_summary.to_csv(save_full_path_with_file_name)
-    
+        print('...summary table saved')
+
         return None
 	
-	
+
 if __name__ == "__main__":
     config = Config().params
 
