@@ -53,7 +53,7 @@ class NiftiAnalysis:
                     sample = data[:,layer_numb,:]
                 elif axis==0:
                     sample = data[layer_numb,:,:]
-                ax.imshow(sample, cmap='gray')
+                #ax.imshow(sample, cmap='gray')
 	            
         else:
             for ax, layer_numb in zip(axs.ravel(), layer_numb_list):
@@ -63,7 +63,7 @@ class NiftiAnalysis:
                     sample = data[:,layer_numb,:]
                 elif axis==0:
                     sample = data[layer_numb,:,:]
-                ax.imshow(sample, cmap='gray')
+                #ax.imshow(sample, cmap='gray')
 	    
         plt.savefig(os.path.join(save_path,file_name)+'.png', dpi=300)
         plt.close(fig)
