@@ -127,7 +127,7 @@ class NiftiAnalysis:
         	temp_dict['3d_array_min'] = img_array.min()
         	temp_dict['3d_array_max'] = img_array.min()
 		temp_dict['unique_values'] = np.unique(img_flatten, return_counts=True)[0]
-		temp_dict['exception_in_binary_file'] = abnormal_mask.size
+		temp_dict['exception_val_count_in_binary_file'] = abnormal_mask.size
 		
 
     		total_dict[i] = temp_dict
