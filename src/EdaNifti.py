@@ -93,7 +93,10 @@ class NiftiAnalysis:
 		ex) ['./1.nii.gz', './2.nii.gz' .... './k.nii.gz']
 		
 	output: save_full_path_with_file_name에 입력한 csv 파일 
-		ex) './result.csv'
+		ex) './result.csv' 
+		
+	칼럼으로 저장되는 내용들은 nibabel 공식 도큐멘테이션 
+
 	'''
     	total_dict = dict()
 
