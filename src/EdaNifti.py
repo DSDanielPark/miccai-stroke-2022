@@ -27,9 +27,15 @@ class NiftiAnalysis:
 
     def save_nifti_images(self, input_nifti_path, axis, layer_numb_list, interval, save_path):
         '''
+	input: 단일 nifti file path (*.nii.gz)
+	output: nifti 파일의 2d 단면 
+	
+	
         axis: 0,1,2 축 결정
         layer_numb_list: 9장의 시각화할 단면 번호, None으로 입력시 전체 이미지의 중간 단면 수를 
                          기준으로 interval=5만큼 이동하면서 총 9개의 단면을 결정함
+			 커스텀하려면 [0,1,2,3,4,5,6,7,8]과 같이 9개의 리스트 입력
+			 그러면 단면 0, 단면 1, 단면3... 의 이미지들이 저장됨
         interval: 중간 단면 수로부터 선택할 슬라이드 간격
         save_path: 저장할 경로 입력
 
@@ -82,6 +88,13 @@ class NiftiAnalysis:
     	return io.getvalue()
         
     def save_summary_table(self, globbed_nifti_file_paths, save_full_path_with_file_name):
+	'''
+	input: glob으로 리스트로 만든 k개의 nifti 파일들의 경로들 
+		ex) ['./1.nii.gz', './2.nii.gz' .... './k.nii.gz']
+		
+	output: save_full_path_with_file_name에 입력한 csv 파일 
+		ex) './result.csv'
+	'''
     	total_dict = dict()
 
     	for i, nifti_path in enumerate(globed_nifti_file_paths):
