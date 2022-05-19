@@ -75,6 +75,11 @@ class NiftiAnalysis:
         whole_file_list = glob.glob(r"{}".format(data_path), recursive=True)
         
         return whole_file_list
+
+    def save_print_instance(*message):
+	io = StringIO()
+    	print(*message, file=io, end="")
+    	return io.getvalue()
         
     def save_summary_table(self, globbed_nifti_file_paths, save_full_path_with_file_name):
     	total_dict = dict()
@@ -94,7 +99,7 @@ class NiftiAnalysis:
         	file_name = nifti_path.split('\\')[-1].rstrip('.nii.gz')
 
         	hdr = img.header
-        	hdr_info = save_print_instance(hdr)
+        	hdr_info = self.save_print_instance(hdr)
         	raw = hdr.structarr		
         	temp_dict['img_affine_shape'] = img.affine.shape
         	temp_dict['img_affine_metrix'] = np.round(img.affine)
