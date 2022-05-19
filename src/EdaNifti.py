@@ -119,6 +119,7 @@ class NiftiAnalysis:
         	raw = hdr.structarr		
         	temp_dict['img_affine_shape'] = img.affine.shape
         	temp_dict['img_affine_metrix'] = np.round(img.affine)
+		temp_dict['img_affine_metrix(raw value)'] = img.affine
         	temp_dict['file_name'] = file_name
         	temp_dict['data_dtype'] = img.get_data_dtype()
         	temp_dict['nifti_img_shape'] = img.shape
