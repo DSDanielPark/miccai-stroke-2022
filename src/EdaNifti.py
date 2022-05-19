@@ -76,7 +76,41 @@ class NiftiAnalysis:
         
         return whole_file_list
         
+    def save_summary_table(self, globbed_nifti_file_paths, save_full_path_with_file_name):
+    	total_dict = dict()
+
+    	for i, nifti_path in enumerate(globed_nifti_file_paths):
+		#print(i)
+        	#print(nifti_path)
+        	temp_dict = dict()
+        	img = nib.load(nifti_path)
+
+        	file_name = nifti_path.split('\\')[-1].rstrip('.nii.gz')
+
+        	hdr = img.header
+        	hdr_info = save_print_instance(hdr)
+        	raw = hdr.structarr		
+        	temp_dict['img_affine_shape'] = img.affine.shape
+        	temp_dict['img_affine_metrix'] = np.round(img.affine)
+        	temp_dict['file_name'] = file_name
+        	temp_dict['data_dtype'] = img.get_data_dtype()
+        	temp_dict['nifti_img_shape'] = img.shape
+        	temp_dict['hdr_info'] = hdr_info.strip("<class 'nibabel.nifti1.Nifti1Header'> object, ")
+        	temp_dict['hdr.get_xyzt_units'] = hdr.get_xyzt_units()
+        	temp_dict['hdr_raw'] = raw
+        	temp_dict['3d_array_mean'] = img_array.mean()
+        	temp_dict['3d_array_std'] = img_array.std()
+        	temp_dict['3d_array_min'] = img_array.min()
+        	temp_dict['3d_array_max'] = img_array.min()
+
+    		total_dict[i] = temp_dict
         
+    	df_summary = pd.DataFrame(total_dict).T
+    	df_summary.to_csv(save_full_path_with_file_name)
+        
+    return None
+	
+	
 if __name__ == "__main__":
     config = Config().params
 
@@ -85,15 +119,12 @@ if __name__ == "__main__":
     task2_test_path = config['DATA2_PATH'] + '/Testing/**/**/**/**/*.nii.gz'
     task2_train_path = config['DATA2_PATH'] + '/Training/**/**/**/**/*.nii.gz'
 
-
-
     eda = NiftiAnalysis(config)
     task1_de = eda.reculsive_glob_list(task1_derivateive_file_path)
     task1_raw = eda.reculsive_glob_list(task1_rawdata_file_path)
     
     task2_test = eda.reculsive_glob_list(task2_test_path)
     task2_train = eda.reculsive_glob_list(task2_train_path)
-
 
     interval = 4
 
@@ -102,4 +133,9 @@ if __name__ == "__main__":
         [eda.save_nifti_images(task1_raw[i], k, None, interval, '../result/task1_raw'+str(k)+'/') for i in range(len(task1_raw))]
         [eda.save_nifti_images(task2_test[i], k, None, interval, '../result/task2_test'+str(k)+'/') for i in range(len(task2_test))]
         [eda.save_nifti_images(task2_train[i], k, None, interval, '../result/task2_train'+str(k)+'/') for i in range(len(task2_train))]
-
+	
+    save_summary_table(task1_de, './task1_derivatives_nii.csv')
+    save_summary_table(task1_raw, './task1_rawdata_nii.csv')
+    save_summary_table(task2_test, './task2_test_data.csv')
+    save_summary_table(task2_train, './task2_train_data.csv')
+	
