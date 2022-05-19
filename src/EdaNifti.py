@@ -134,8 +134,8 @@ if __name__ == "__main__":
         [eda.save_nifti_images(task2_test[i], k, None, interval, '../result/task2_test'+str(k)+'/') for i in range(len(task2_test))]
         [eda.save_nifti_images(task2_train[i], k, None, interval, '../result/task2_train'+str(k)+'/') for i in range(len(task2_train))]
 	
-    save_summary_table(task1_de, './task1_derivatives_nii.csv')
-    save_summary_table(task1_raw, './task1_rawdata_nii.csv')
-    save_summary_table(task2_test, './task2_test_data.csv')
-    save_summary_table(task2_train, './task2_train_data.csv')
+    eda.save_summary_table(task1_de, './task1_derivatives_nii.csv')
+    eda.save_summary_table(task1_raw, './task1_rawdata_nii.csv')
+    eda.save_summary_table(task2_test, './task2_test_data.csv')
+    eda.save_summary_table(task2_train, './task2_train_data.csv')
 	
