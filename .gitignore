@@ -9,7 +9,7 @@ __pycache__
 *.tar.gz
 *.csv
 *.xlsx
-*.pdf
+
 *.nii
 
 ## iOS files
