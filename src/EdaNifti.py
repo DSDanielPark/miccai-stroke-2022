@@ -16,10 +16,10 @@ parser.add_argument('--save_path', default='./')
 
 
 class NiftiAnalysis:
-    def __init__(self, Config):
-        self.config = Config
+    def __init__(self):
+        pass
 
-    def save_nifti_images(self, input_nifti_path, axis, layer_numb_list, interval, save_path):
+    def save_nifti_images(self, input_nifti_path:str, axis:str, layer_numb_list:list, interval:int, save_path:str) -> None:
         '''
         input: 단일 nifti file path (*.nii.gz)
         output: nifti 파일의 2d 단면 
@@ -84,11 +84,13 @@ class NiftiAnalysis:
                     gathered_file_pathes.append(detect_file_path)
 
         return gathered_file_pathes
+        
 
     def save_print_instance(*message):
         io = StringIO()
         print(*message, file=io, end="")
         return io.getvalue()
+
         
     def save_summary_table(self, globbed_nifti_file_paths, save_full_path_with_file_name):
         '''
