@@ -21,8 +21,8 @@ class NiftiAnalysis:
 
     def save_nifti_images(self, input_nifti_path, axis, layer_numb_list, interval, save_path):
         '''
-	input: 단일 nifti file path (*.nii.gz)
-	output: nifti 파일의 2d 단면 
+        input: 단일 nifti file path (*.nii.gz)
+        output: nifti 파일의 2d 단면 
 	
 	
         axis: 0,1,2 축 결정
