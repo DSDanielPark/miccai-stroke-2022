@@ -9,17 +9,10 @@ import matplotlib.pyplot as plt
 from io import StringIO
 
 
-class Config:
-    parser = argparse.ArgumentParser(description='configuration for nifti analysis')
-    parser.add_argument('--task1_data_path', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/data/task1.stroke_segmentation/dataset-ISLES22^release1 unzipped version')
-    parser.add_argument('--task2_data_path', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/data/task2.ATLAS_2.0/ATLAS_2')
-    parser.add_argument('--save_path', default='./')
-    parse = parser.parse_args()
-    params = {
-        'DATA1_PATH': parse.task1_data_path,
-        'DATA2_PATH': parse.task2_data_path,
-        'SAVE_PATH': parse.save_path
-    }
+parser = argparse.ArgumentParser(description='configuration for nifti analysis')
+parser.add_argument('--nifti_folder', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/data/task1.stroke_segmentation/dataset-ISLES22^release1 unzipped version')
+parser.add_argument('--save_path', default='./')
+
 
 
 class NiftiAnalysis:
@@ -81,10 +74,16 @@ class NiftiAnalysis:
         return None
 
 
-    def recursive_glob_list(self, data_path):
-        whole_file_list = glob.glob(r"{}".format(data_path), recursive=True)
-        
-        return whole_file_list
+    def recursive_find_all_files(top_folder_path, file_format):
+        gathered_file_pathes = []
+
+        for (root, directories, files) in os.walk(top_folder_path):
+            for file in files:
+                if file_format in file:
+                    detect_file_path = os.path.join(root, file)
+                    gathered_file_pathes.append(detect_file_path)
+
+        return gathered_file_pathes
 
     def save_print_instance(*message):
         io = StringIO()
@@ -145,30 +144,11 @@ class NiftiAnalysis:
 	
 
 if __name__ == "__main__":
-    config = Config().params
+    niftieda = NiftiAnalysis()
+    args = parser.parse_args()
 
-    task1_derivateive_file_path = config['DATA1_PATH'] + '/derivatives/**/*.nii.gz'
-    task1_rawdata_file_path = config['DATA1_PATH'] +  '/rawdata/**/*.nii.gz'
-    task2_test_path = config['DATA2_PATH'] + '/Testing/**/**/**/**/*.nii.gz'
-    task2_train_path = config['DATA2_PATH'] + '/Training/**/**/**/**/*.nii.gz'
-
-    eda = NiftiAnalysis(config)
-    task1_de = eda.recursive_glob_list(task1_derivateive_file_path)
-    task1_raw = eda.recursive_glob_list(task1_rawdata_file_path)
-    
-    task2_test = eda.recursive_glob_list(task2_test_path)
-    task2_train = eda.recursive_glob_list(task2_train_path)
-
-    interval = 4
-
-    # for k in range(3):
-    #     [eda.save_nifti_images(task1_de[i], k, None, interval, '../result/task1_mask'+str(k)+'/') for i in range(len(task1_de))]
-    #     [eda.save_nifti_images(task1_raw[i], k, None, interval, '../result/task1_raw'+str(k)+'/') for i in range(len(task1_raw))]
-    #     [eda.save_nifti_images(task2_test[i], k, None, interval, '../result/task2_test'+str(k)+'/') for i in range(len(task2_test))]
-    #     [eda.save_nifti_images(task2_train[i], k, None, interval, '../result/task2_train'+str(k)+'/') for i in range(len(task2_train))]
+    nifit_folder = args.nifti_folder
+    all_nifti_files_under_nifti_folder = niftieda.recursive_find_all_files(nifit_folder, '.nii.gz')
 	
-    eda.save_summary_table(task1_de, './task1_derivatives_nii.csv')
-    eda.save_summary_table(task1_raw, './task1_rawdata_nii.csv')
-    eda.save_summary_table(task2_test, './task2_test_data.csv')
-    eda.save_summary_table(task2_train, './task2_train_data.csv')
+    niftieda.save_summary_table(all_nifti_files_under_nifti_folder, './nifti_eda_result.csv')
 	
