@@ -10,7 +10,7 @@ from io import StringIO
 
 
 parser = argparse.ArgumentParser(description='configuration for nifti analysis')
-parser.add_argument('--nifti_folder', default='C:/Users/parkm/Desktop/github/miccai_stroke_2022/data/task1.stroke_segmentation/dataset-ISLES22^release1 unzipped version')
+parser.add_argument('--nifti_folder', default='./data')
 parser.add_argument('--save_path', default='./')
 
 
@@ -150,5 +150,7 @@ if __name__ == "__main__":
     nifit_folder = args.nifti_folder
     all_nifti_files_under_nifti_folder = niftieda.recursive_find_all_files(nifit_folder, '.nii.gz')
 	
+    #01. nifti_folder 안에 있는 모든 '.nii.gz' 파일을 대상으로 메타 정보 엑셀 파일 생성
+    ## 'nii'파일 존재시 list join 해주세요.
     niftieda.save_summary_table(all_nifti_files_under_nifti_folder, './nifti_eda_result.csv')
 	
