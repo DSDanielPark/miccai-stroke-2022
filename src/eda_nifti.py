@@ -1,4 +1,5 @@
 import argparse
+from hamcrest import ends_with
 import pandas as pd
 import glob
 import os
@@ -74,7 +75,7 @@ class NiftiAnalysis:
         return None
 
 
-    def recursive_find_all_files(top_folder_path, file_format):
+    def recursive_find_all_files(self, top_folder_path, file_format):
         gathered_file_pathes = []
 
         for (root, directories, files) in os.walk(top_folder_path):
@@ -146,6 +147,7 @@ class NiftiAnalysis:
 	
 
 if __name__ == "__main__":
+    
     niftieda = NiftiAnalysis()
     args = parser.parse_args()
 
