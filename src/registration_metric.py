@@ -1,5 +1,6 @@
 import numpy as np
 import SimpleITK as sitk
+import ants
 from ipywidgets import interact, fixed
 import matplotlib.pyplot as plt
 
@@ -8,7 +9,7 @@ class RegistrationMetric:
     def __init__(self):
         self.ant_neighborhood_radius = 1
 
-    def calculate_registration_metric(self, nii_file_path1, nii_file_path2):
+    def calculate_registration_metric(self, nii_file_path1: str, nii_file_path2: str) -> dict:
         img1 = sitk.ReadImage(nii_file_path1)
         img2 = sitk.ReadImage(nii_file_path2)
 
@@ -43,14 +44,14 @@ class RegistrationMetric:
 
         return metric_dict
 
-    def display_images_with_alpha(image_z, alpha, fixed, moving):
+    def display_images_with_alpha(image_z: int, alpha: np.float_, fixed: ants.core.ANTsImage, moving: ants.core.ANTsImage) -> plt:
 
         img = (1.0 - alpha) * fixed[:, :, image_z] + alpha * moving[:, :, image_z]
         plt.imshow(sitk.GetArrayViewFromImage(img), cmap=plt.cm.Greys_r)
         plt.axis("off")
         plt.show()
 
-    def visuall_validation(self, nii_file_path1, nii_file_path2):
+    def visuall_validation(self, nii_file_path1: str, nii_file_path2: str):
         fixed_image = sitk.ReadImage(nii_file_path1)
         moving_image = sitk.ReadImage(nii_file_path2)
 
