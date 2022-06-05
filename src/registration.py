@@ -16,7 +16,7 @@ class AntsRegistration:
     
         # for more infomation of each registration parameter: https://antspyx.readthedocs.io/en/latest/registration.html
 
-    def to_nibabel(image):
+    def to_nibabel(image: ants.core.ANTsImage) -> ants.core.ANTsImage:
         """
         Convert an ANTsImage to a Nibabel image
         """
